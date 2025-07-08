@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRM-SM | Plateforme de Gestion de Stages</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Chargement de la plateforme SRM-SM...</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div id="mainContainer" class="main-container hidden">
+        <!-- Header -->
+        <header id="mainHeader" class="main-header hidden">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>SRM-SM</span>
+                    </div>
+                    <nav class="main-nav">
+                        <a href="#" id="navDashboard" class="nav-link active">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Tableau de bord
+                        </a>
+                        <a href="#" id="navDemandes" class="nav-link">
+                            <i class="fas fa-file-alt"></i>
+                            Demandes
+                        </a>
+                        <a href="#" id="navProfil" class="nav-link">
+                            <i class="fas fa-user"></i>
+                            Profil
+                        </a>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <span id="userName" class="user-name"></span>
+                            <span id="userRole" class="user-role"></span>
+                        </div>
+                    </div>
+                    <button id="btnLogout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Déconnexion
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Auth Container -->
+        <div id="authContainer" class="auth-container">
+            <div class="auth-background">
+                <div class="auth-overlay"></div>
+            </div>
+            
+            <div class="auth-content">
+                <!-- Logo and Title -->
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h1 class="auth-title">SRM-SM</h1>
+                    <p class="auth-subtitle">Plateforme Intelligente de Gestion de Stages</p>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button id="btnInscription" class="tab-btn active" data-tab="inscription">
+                        <i class="fas fa-user-plus"></i>
+                        Inscription
+                    </button>
+                    <button id="btnConnexion" class="tab-btn" data-tab="connexion">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Connexion
+                    </button>
+                    <button id="btnAdmin" class="tab-btn" data-tab="admin">
+                        <i class="fas fa-user-shield"></i>
+                        Administration
+                    </button>
+                </div>
+
+                <!-- Forms Container -->
+                <div class="forms-container">
+                    <!-- Inscription Form -->
+                    <form id="formInscription" class="auth-form active" enctype="multipart/form-data">
+                        <div class="form-header">
+                            <h2><i class="fas fa-user-plus"></i> Créer un compte candidat</h2>
+                            <p>Rejoignez la plateforme SRM-SM pour gérer vos demandes de stage</p>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="inscNom"><i class="fas fa-user"></i> Nom</label>
+                                <input type="text" id="inscNom" name="nom" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inscPrenom"><i class="fas fa-user"></i> Prénom</label>
+                                <input type="text" id="inscPrenom" name="prenom" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inscEmail"><i class="fas fa-envelope"></i> Adresse email</label>
+                            <input type="email" id="inscEmail" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inscMotDePasse"><i class="fas fa-lock"></i> Mot de passe</label>
+                            <input type="password" id="inscMotDePasse" name="motDePasse" required minlength="6">
+                            <small>Au moins 6 caractères</small>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="inscTelephone"><i class="fas fa-phone"></i> Téléphone</label>
+                                <input type="tel" id="inscTelephone" name="telephone">
+                            </div>
+                            <div class="form-group">
+                                <label for="inscAdresse"><i class="fas fa-map-marker-alt"></i> Adresse</label>
+                                <input type="text" id="inscAdresse" name="adresse">
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="inscEtablissement"><i class="fas fa-university"></i> Établissement</label>
+                                <select id="inscEtablissement" name="etablissement" required>
+                                    <option value="">-- Choisir établissement --</option>
+                                    <option value="Faculté">Faculté</option>
+                                    <option value="ENSA">ENSA</option>
+                                    <option value="ENCG">ENCG</option>
+                                    <option value="EST">EST</option>
+                                    <option value="EMI">EMI</option>
+                                    <option value="EHTP">EHTP</option>
+                                    <option value="INSA">INSA</option>
+                                    <option value="INSEA">INSEA</option>
+                                    <option value="INPT">INPT</option>
+                                    <option value="ESI">ESI</option>
+                                    <option value="ENSEM">ENSEM</option>
+                                    <option value="ENSET">ENSET</option>
+                                    <option value="ESSTI">ESSTI</option>
+                                    <option value="ENSIAS">ENSIAS</option>
+                                    <option value="ECC">ECC</option>
+                                    <option value="ENSAM">ENSAM</option>
+                                    <option value="ENIM">ENIM</option>
+                                    <option value="EMSI">EMSI</option>
+                                    <option value="FST">FST</option>
+                                    <option value="Autres">Autres</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inscDomaine"><i class="fas fa-briefcase"></i> Domaine</label>
+                                <select id="inscDomaine" name="domaine" required>
+                                    <option value="">-- Choisir domaine --</option>
+                                    <option value="Informatique">Informatique</option>
+                                    <option value="Gestion">Gestion</option>
+                                    <option value="électricité et électromécanique">Électricité et électromécanique</option>
+                                    <option value="Génie Civil">Génie Civil</option>
+                                    <option value="Logistique et transport">Logistique et transport</option>
+                                    <option value="Ressources humaines">Ressources humaines</option>
+                                    <option value="Autres">Autres</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inscNiveau"><i class="fas fa-graduation-cap"></i> Niveau d'études</label>
+                            <select id="inscNiveau" name="niveau" required>
+                                <option value="">-- Choisir niveau --</option>
+                                <option value="Bac+1">Bac+1</option>
+                                <option value="Bac+2">Bac+2</option>
+                                <option value="Bac+3">Bac+3</option>
+                                <option value="Bac+4">Bac+4</option>
+                                <option value="Bac+5">Bac+5</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-user-plus"></i>
+                            <span>S'inscrire</span>
+                            <div class="btn-loader hidden">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                        </button>
+                    </form>
+
+                    <!-- Connexion Candidat Form -->
+                    <form id="formConnexion" class="auth-form">
+                        <div class="form-header">
+                            <h2><i class="fas fa-sign-in-alt"></i> Connexion Candidat</h2>
+                            <p>Accédez à votre espace personnel</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="connEmail"><i class="fas fa-envelope"></i> Adresse email</label>
+                            <input type="email" id="connEmail" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="connMotDePasse"><i class="fas fa-lock"></i> Mot de passe</label>
+                            <input type="password" id="connMotDePasse" name="motDePasse" required>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Se connecter</span>
+                            <div class="btn-loader hidden">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                        </button>
+                    </form>
+
+                    <!-- Connexion Admin Form -->
+                    <form id="formAdmin" class="auth-form">
+                        <div class="form-header">
+                            <h2><i class="fas fa-user-shield"></i> Connexion Administrateur</h2>
+                            <p>Accès réservé aux administrateurs</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adminEmail"><i class="fas fa-envelope"></i> Email administrateur</label>
+                            <input type="email" id="adminEmail" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adminMotDePasse"><i class="fas fa-lock"></i> Mot de passe</label>
+                            <input type="password" id="adminMotDePasse" name="motDePasse" required>
+                        </div>
+
+                        <button type="submit" class="submit-btn admin-btn">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Connexion Admin</span>
+                            <div class="btn-loader hidden">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Container -->
+        <div id="dashboardContainer" class="dashboard-container hidden">
+            <!-- Candidat Dashboard -->
+            <div id="candidatDashboard" class="dashboard-content hidden">
+                <div class="dashboard-header">
+                    <div class="welcome-section">
+                        <h1>Bienvenue, <span id="candidatName"></span></h1>
+                        <p>Gérez vos demandes de stage et suivez leur progression</p>
+                    </div>
+                    <button id="btnNouvelledemande" class="primary-btn">
+                        <i class="fas fa-plus"></i>
+                        Nouvelle demande
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalDemandes">0</h3>
+                            <p>Total demandes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="demandesEnAttente">0</h3>
+                            <p>En attente</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="demandesAcceptees">0</h3>
+                            <p>Acceptées</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon danger">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="demandesRejetees">0</h3>
+                            <p>Rejetées</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demandes List -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-list"></i> Mes demandes de stage</h2>
+                        <div class="section-actions">
+                            <button id="btnRefreshDemandes" class="secondary-btn">
+                                <i class="fas fa-sync-alt"></i>
+                                Actualiser
+                            </button>
+                        </div>
+                    </div>
+                    <div id="demandesList" class="demandes-list">
+                        <!-- Demandes will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div id="adminDashboard" class="dashboard-content hidden">
+                <div class="dashboard-header">
+                    <div class="welcome-section">
+                        <h1>Administration SRM-SM</h1>
+                        <p>Gérez les demandes de stage et prenez vos décisions</p>
+                    </div>
+                    <div class="admin-actions">
+                        <button id="btnExportData" class="secondary-btn">
+                            <i class="fas fa-download"></i>
+                            Exporter
+                        </button>
+                        <button id="btnRefreshAdmin" class="primary-btn">
+                            <i class="fas fa-sync-alt"></i>
+                            Actualiser
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Admin Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="adminTotalDemandes">0</h3>
+                            <p>Total demandes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="adminDemandesEnAttente">0</h3>
+                            <p>En attente</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="adminDemandesAcceptees">0</h3>
+                            <p>Acceptées</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon danger">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="adminDemandesRejetees">0</h3>
+                            <p>Rejetées</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-filter"></i> Filtres</h2>
+                    </div>
+                    <div class="filters-container">
+                        <div class="filter-group">
+                            <label for="filterStatut">Statut</label>
+                            <select id="filterStatut">
+                                <option value="">Tous les statuts</option>
+                                <option value="En attente">En attente</option>
+                                <option value="Accepté">Accepté</option>
+                                <option value="Rejeté">Rejeté</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filterDomaine">Domaine</label>
+                            <select id="filterDomaine">
+                                <option value="">Tous les domaines</option>
+                                <option value="Informatique">Informatique</option>
+                                <option value="Gestion">Gestion</option>
+                                <option value="électricité et électromécanique">Électricité et électromécanique</option>
+                                <option value="Génie Civil">Génie Civil</option>
+                                <option value="Logistique et transport">Logistique et transport</option>
+                                <option value="Ressources humaines">Ressources humaines</option>
+                                <option value="Autres">Autres</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="searchInput">Recherche</label>
+                            <input type="text" id="searchInput" placeholder="Nom, email...">
+                        </div>
+                        <button id="btnApplyFilters" class="primary-btn">
+                            <i class="fas fa-search"></i>
+                            Appliquer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Admin Demandes Table -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-table"></i> Gestion des demandes</h2>
+                    </div>
+                    <div id="adminDemandesContainer" class="table-container">
+                        <!-- Admin table will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nouvelle Demande Form -->
+            <div id="nouvelleDemandeContainer" class="form-container hidden">
+                <div class="form-header">
+                    <button id="btnRetourDashboard" class="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Retour
+                    </button>
+                    <h2><i class="fas fa-plus"></i> Nouvelle demande de stage</h2>
+                </div>
+
+                <form id="formNouvelleDemande" class="demande-form" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="demandeDomaine"><i class="fas fa-briefcase"></i> Domaine</label>
+                            <select id="demandeDomaine" name="domaine" required>
+                                <option value="">-- Choisir domaine --</option>
+                                <option value="Informatique">Informatique</option>
+                                <option value="Gestion">Gestion</option>
+                                <option value="électricité et électromécanique">Électricité et électromécanique</option>
+                                <option value="Génie Civil">Génie Civil</option>
+                                <option value="Logistique et transport">Logistique et transport</option>
+                                <option value="Ressources humaines">Ressources humaines</option>
+                                <option value="Autres">Autres</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="demandeEtablissement"><i class="fas fa-university"></i> Établissement cible</label>
+                            <select id="demandeEtablissement" name="etablissement" required>
+                                <option value="">-- Choisir établissement --</option>
+                                <option value="SRM-SM">SRM-SM</option>
+                                <option value="Autres">Autres</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="demandeNiveau"><i class="fas fa-graduation-cap"></i> Niveau</label>
+                            <select id="demandeNiveau" name="niveau" required>
+                                <option value="">-- Choisir niveau --</option>
+                                <option value="Bac+1">Bac+1</option>
+                                <option value="Bac+2">Bac+2</option>
+                                <option value="Bac+3">Bac+3</option>
+                                <option value="Bac+4">Bac+4</option>
+                                <option value="Bac+5">Bac+5</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="demandeDescription"><i class="fas fa-align-left"></i> Description (optionnel)</label>
+                        <textarea id="demandeDescription" name="description" rows="4" placeholder="Décrivez vos motivations, objectifs de stage..."></textarea>
+                    </div>
+
+                    <div class="file-upload-section">
+                        <div class="file-upload-group">
+                            <label><i class="fas fa-file-pdf"></i> CV (PDF uniquement)</label>
+                            <div class="file-upload-area" id="cvUploadArea">
+                                <input type="file" id="cvFile" name="cv" accept="application/pdf" required>
+                                <div class="upload-content">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Cliquez ou glissez votre CV ici</p>
+                                    <small>Format PDF, max 5MB</small>
+                                </div>
+                                <div class="file-preview hidden" id="cvPreview"></div>
+                            </div>
+                        </div>
+
+                        <div class="file-upload-group">
+                            <label><i class="fas fa-file-pdf"></i> Lettre de motivation (PDF uniquement)</label>
+                            <div class="file-upload-area" id="lettreUploadArea">
+                                <input type="file" id="lettreFile" name="lettre" accept="application/pdf" required>
+                                <div class="upload-content">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Cliquez ou glissez votre lettre ici</p>
+                                    <small>Format PDF, max 5MB</small>
+                                </div>
+                                <div class="file-preview hidden" id="lettrePreview"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Soumettre la demande</span>
+                        <div class="btn-loader hidden">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Message Toast -->
+        <div id="messageToast" class="message-toast hidden">
+            <div class="toast-content">
+                <div class="toast-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="toast-message">
+                    <span id="toastMessage"></span>
+                </div>
+                <button id="closeToast" class="toast-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
